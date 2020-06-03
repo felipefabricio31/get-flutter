@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:get_flutter/home/home_model.dart';
+import 'package:get_flutter/models/home_model.dart';
 
 class Api {
   Future<ApiModel> fetchData() async {

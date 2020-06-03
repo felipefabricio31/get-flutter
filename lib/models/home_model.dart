@@ -11,7 +11,8 @@ class ApiModel {
   final List<Country> countries;
   final DateTime date;
 
-  factory ApiModel.fromRawJson(String str) => ApiModel.fromJson(json.decode(str));
+  factory ApiModel.fromRawJson(String str) =>
+      ApiModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
