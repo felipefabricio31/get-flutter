@@ -20,7 +20,6 @@ class EstadosController extends GetController {
         colorText: Colors.white,
       );
     } else {
-      print(response.data[0].uid);
       model = response;
       update(this);
     }

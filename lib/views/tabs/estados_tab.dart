@@ -16,15 +16,48 @@ class EstadosTab extends StatelessWidget {
           } else {
             return Container(
               color: Colors.white,
-              child: ListView.builder(
-                itemCount: _.model.data.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: Icon(Icons.map),
-                    title: Text("${_.model.data[index].uid}"),
-                    subtitle: Text("${_.model.data[index].uid}"),
-                  );
-                },
+              child: DataTable(
+                columns: const <DataColumn>[
+                  DataColumn(
+                    label: Text(
+                      'Estado',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                    numeric: false,
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Confirmados',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                    numeric: false,
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Mortes',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                    numeric: false,
+                  ),
+                ],
+                rows: _.model.data
+                    .map(
+                      (item) => DataRow(cells: [
+                        DataCell(
+                          Text(item.uf),
+                          onTap: () {
+                            // write your code..
+                          },
+                        ),
+                        DataCell(
+                          Text(item.cases.toString()),
+                        ),
+                        DataCell(
+                          Text(item.deaths.toString()),
+                        ),
+                      ]),
+                    )
+                    .toList(),
               ),
             );
           }
