@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_flutter/controllers/estados_controller.dart';
+import 'package:get_flutter/controllers/covid_controller.dart';
 
 class EstadosTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
-      child: GetBuilder<EstadosController>(
-        init: EstadosController(),
+      child: GetBuilder<CovidController>(
+        init: CovidController(),
         initState: (_) {
-          EstadosController.to.getTodosEstados();
+          CovidController.to.getTodosEstados();
         },
         builder: (_) {
           if (_.model == null) {
             return CircularProgressIndicator();
           } else {
-            return SingleChildScrollView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Container(
                     padding: EdgeInsets.all(5),
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(2),
                     color: Colors.white,
                     child: DataTable(
                       sortAscending: _.sort,
@@ -30,7 +30,8 @@ class EstadosTab extends StatelessWidget {
                           label: Text(
                             'Estado',
                             style: TextStyle(
-                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
                               color: Colors.black,
                             ),
                           ),
@@ -43,7 +44,11 @@ class EstadosTab extends StatelessWidget {
                         DataColumn(
                           label: Text(
                             'Confirmados',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.black,
+                            ),
                           ),
                           numeric: false,
                           onSort: (columnIndex, ascending) {
@@ -54,7 +59,11 @@ class EstadosTab extends StatelessWidget {
                         DataColumn(
                           label: Text(
                             'Mortes',
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.black,
+                            ),
                           ),
                           numeric: false,
                           onSort: (columnIndex, ascending) {
@@ -65,26 +74,35 @@ class EstadosTab extends StatelessWidget {
                       ],
                       rows: _.model.data
                           .map(
-                            (item) => DataRow(cells: [
-                              DataCell(
-                                Text(item.uf),
-                                onTap: () {
-                                  // write your code..
-                                },
-                              ),
-                              DataCell(
-                                Text(item.cases.toString()),
-                              ),
-                              DataCell(
-                                Text(item.deaths.toString()),
-                              ),
-                            ]),
+                            (item) => DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(item.uf),
+                                  onTap: () {},
+                                ),
+                                DataCell(
+                                  Text(
+                                    item.cases.toString(),
+                                  ),
+                                  onTap: () {},
+                                ),
+                                DataCell(
+                                  Text(
+                                    item.deaths.toString(),
+                                  ),
+                                  onTap: () {
+                                    print(item.deaths.toString());
+                                  },
+                                ),
+                              ],
+                            ),
                           )
                           .toList(),
+                      dataRowHeight: 40,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           }
         },
