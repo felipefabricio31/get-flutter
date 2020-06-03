@@ -14,50 +14,76 @@ class EstadosTab extends StatelessWidget {
           if (_.model == null) {
             return CircularProgressIndicator();
           } else {
-            return Container(
-              color: Colors.white,
-              child: DataTable(
-                columns: const <DataColumn>[
-                  DataColumn(
-                    label: Text(
-                      'Estado',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                    numeric: false,
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Confirmados',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                    numeric: false,
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Mortes',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                    numeric: false,
-                  ),
-                ],
-                rows: _.model.data
-                    .map(
-                      (item) => DataRow(cells: [
-                        DataCell(
-                          Text(item.uf),
-                          onTap: () {
-                            // write your code..
+            return SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(5),
+                    color: Colors.white,
+                    child: DataTable(
+                      sortAscending: _.sort,
+                      sortColumnIndex: 2,
+                      columns: [
+                        DataColumn(
+                          label: Text(
+                            'Estado',
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black,
+                            ),
+                          ),
+                          numeric: false,
+                          onSort: (columnIndex, ascending) {
+                            _.sort = !_.sort;
+                            _.onSortColum(columnIndex, ascending);
                           },
                         ),
-                        DataCell(
-                          Text(item.cases.toString()),
+                        DataColumn(
+                          label: Text(
+                            'Confirmados',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                          numeric: false,
+                          onSort: (columnIndex, ascending) {
+                            _.sort = !_.sort;
+                            _.onSortColum(columnIndex, ascending);
+                          },
                         ),
-                        DataCell(
-                          Text(item.deaths.toString()),
+                        DataColumn(
+                          label: Text(
+                            'Mortes',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                          numeric: false,
+                          onSort: (columnIndex, ascending) {
+                            _.sort = !_.sort;
+                            _.onSortColum(columnIndex, ascending);
+                          },
                         ),
-                      ]),
-                    )
-                    .toList(),
+                      ],
+                      rows: _.model.data
+                          .map(
+                            (item) => DataRow(cells: [
+                              DataCell(
+                                Text(item.uf),
+                                onTap: () {
+                                  // write your code..
+                                },
+                              ),
+                              DataCell(
+                                Text(item.cases.toString()),
+                              ),
+                              DataCell(
+                                Text(item.deaths.toString()),
+                              ),
+                            ]),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
               ),
             );
           }
